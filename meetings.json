@@ -1,0 +1,1 @@
+{"nextId":51,"roles":[{"isGuest":false,"name":"Fred","id":"ID35"},{"isGuest":false,"name":"Sam","id":"ID36"},{"isGuest":true,"name":"Master","id":"ID1"},{"isGuest":false,"name":"Hello","id":"ID47"}],"people":[{"roleId":"ID35","name":"Fred","id":"ID37"},{"roleId":"ID36","name":"New name","id":"ID8"},{"roleId":null,"name":"Peter2","id":"ID7"}],"sections":[{"name":"","id":"ID50"}]}
