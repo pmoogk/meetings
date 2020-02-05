@@ -2,14 +2,17 @@ package peter.meeting.components.tablesWithActions;
 
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 public class TableListener implements TableModelListener {
-	private List<ActionButton> buttons;
+	private List<ActionButton> buttonActions;
+	private List<JButton> buttons;
 
-	public TableListener(List<ActionButton> buttons) {
+	public TableListener(List<ActionButton> buttonActions, List<JButton> buttons) {
+		this.buttonActions = buttonActions;
 		this.buttons = buttons;
 	}
 
@@ -32,7 +35,12 @@ public class TableListener implements TableModelListener {
 			final boolean isBottom = lastIndex == model.getRowCount() - 1;
 			final int count = selectedCount;
 
-			buttons.forEach(button -> button.getButton().setEnabled(button.isEnabled(count, isTop, isBottom)));
+			for (int index = 0, size = buttonActions.size(); index < size; index++) {
+				ActionButton action = buttonActions.get(index);
+				JButton button = buttons.get(index);
+
+				button.setEnabled(action.isEnabled(count, isTop, isBottom));
+			}
 		}
 	}
 }

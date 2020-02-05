@@ -1,6 +1,6 @@
 package peter.meeting.components.tabs;
 
-import peter.meeting.components.BaseTablePanel;
+import peter.meeting.common.panels.BaseTablePanel;
 import peter.meeting.components.tables.PeopleListTable;
 import peter.meeting.data.Person;
 
@@ -9,5 +9,6 @@ public class PeopleTab extends BaseTablePanel<Person> {
 
 	public PeopleTab() {
 		super(new PeopleListTable());
+		create();
 	}
 }

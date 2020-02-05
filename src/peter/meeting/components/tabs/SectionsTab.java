@@ -1,12 +1,7 @@
 package peter.meeting.components.tabs;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import peter.meeting.components.BaseTablePanel;
+import peter.meeting.common.panels.BaseTablePanel;
 import peter.meeting.components.tables.SectionsListTable;
-import peter.meeting.components.tablesWithActions.ActionButton;
-import peter.meeting.components.tablesWithActions.ActionButtonFactory;
 import peter.meeting.data.Section;
 
 public class SectionsTab extends BaseTablePanel<Section> {
@@ -14,16 +9,6 @@ public class SectionsTab extends BaseTablePanel<Section> {
 
 	public SectionsTab() {
 		super(new SectionsListTable());
+		create();
 	}
-
-	protected List<ActionButton> getButtons() {
-		List<ActionButton> list = new ArrayList<>();
-
-		list.add(ActionButtonFactory.addButton);
-		list.add(ActionButtonFactory.deleteButton);
-		list.add(ActionButtonFactory.shiftUpButton);
-		list.add(ActionButtonFactory.shiftDownButton);
-		return list;
-	}
-
 }

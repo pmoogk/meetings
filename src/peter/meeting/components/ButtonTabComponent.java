@@ -22,6 +22,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.plaf.basic.BasicButtonUI;
 
 import peter.meeting.components.tabs.TabType;
+import peter.meeting.components.tabs.UpdateableTabComponent;
 
 public class ButtonTabComponent extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -94,8 +95,8 @@ public class ButtonTabComponent extends JPanel {
 			if (i != -1) {
 				Component component = pane.getComponent(i);
 
-				if (component instanceof UpdateableComponent) {
-					((UpdateableComponent) component).stopEditing();
+				if (component instanceof UpdateableTabComponent) {
+					((UpdateableTabComponent) component).stopEditing();
 				}
 
 				pane.remove(i);

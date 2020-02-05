@@ -23,6 +23,8 @@ public class TabFactory {
 
 		switch (tabType) {
 		case Meetings:
+			result.setFirst("Meetings");
+			result.setSecond(new MeetingsTab());
 			break;
 		case Issues:
 			break;
@@ -38,6 +40,9 @@ public class TabFactory {
 			result.setFirst("Sections");
 			result.setSecond(new SectionsTab());
 			break;
+		case MeetingDetails:
+			result.setFirst("Meeting details");
+			result.setSecond(new MeetingDetailsTab());
 		default:
 			break;
 		}

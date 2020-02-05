@@ -21,13 +21,13 @@ abstract public class BaseListTable<T extends Identifiable> extends JTable imple
 
 	private static final long serialVersionUID = 1L;
 
-	protected DefaultTableModel tModel;
+	protected TableModel tModel;
 	private DataType dataType;
 	private boolean changeListenerEnabled = true;
 	private List<T> dataList;
 
 	public BaseListTable(String[] headers, DataType dataType) {
-		tModel = new DefaultTableModel(headers, 0);
+		tModel = new TableModel(headers, 0);
 		dataList = StateData.instance().getRoot().getList(dataType);
 		this.dataType = dataType;
 		setModel(tModel);
@@ -89,12 +89,37 @@ abstract public class BaseListTable<T extends Identifiable> extends JTable imple
 
 	abstract protected void updateColumn(int rowIndex, int colIndex, Object newValue);
 
+	protected boolean isColumnEditable(int index) {
+		return true;
+	}
+
+	/**
+	 * This method set all rows for a particular boolean column to false. However,
+	 * the boolean value specified for the rowIndex is not changed.
+	 * 
+	 * @param colIndex
+	 *            the column index where values are to be set to false.
+	 * @param rowIndex
+	 *            the rowIndex to not change.
+	 */
+	public void setBooleanColumnFalse(int rowIndex, int colIndex) {
+		changeListenerEnabled = false;
+
+		for (int index = 0, size = tModel.getRowCount(); index < size; index++) {
+			if (index != rowIndex) {
+				tModel.setValueAt(false, index, colIndex);
+			}
+		}
+
+		changeListenerEnabled = true;
+	}
+
 	private void addRows(DefaultTableModel model) {
 		dataList.forEach(row -> model.addRow(getRow(row)));
 	}
 
 	/**
-	 * Deletes from the state data model.
+	 * Inserts a new row into the state data model.
 	 */
 	@SuppressWarnings("unchecked")
 	private void insertNewRow() {
@@ -169,6 +194,9 @@ abstract public class BaseListTable<T extends Identifiable> extends JTable imple
 		tModel.addRow(getDefaultRow());
 	}
 
+	/**
+	 * Get first selected check box.
+	 */
 	private int getFirstSelected() {
 		int result = -1;
 
@@ -201,5 +229,18 @@ abstract public class BaseListTable<T extends Identifiable> extends JTable imple
 
 	public void changeProperty(String propertyName, String propertyValue) {
 		// Do nothing
+	}
+
+	class TableModel extends DefaultTableModel {
+		private static final long serialVersionUID = 1L;
+
+		public TableModel(String[] headers, int size) {
+			super(headers, size);
+		}
+
+		@Override
+		public boolean isCellEditable(int row, int col) {
+			return isColumnEditable(col);
+		}
 	}
 }

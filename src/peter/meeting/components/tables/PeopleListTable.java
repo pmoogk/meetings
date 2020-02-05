@@ -35,7 +35,7 @@ public class PeopleListTable extends BaseListTable<Person> {
 	}
 
 	protected int[] getColumnWidth(TableColumnModel model) {
-		return new int[] { 60, 200, 200 };
+		return new int[] { 60, 300, 300 };
 	}
 
 	protected Object[] getDefaultRow() {

@@ -1,5 +1,6 @@
 package peter.meeting.components.tablesWithActions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -20,6 +21,9 @@ public class ActionButtonFactory {
 			(selectedCount, isTop, isBottom) -> selectedCount == 1 && !isBottom,
 			tableActions -> tableActions.shiftDown());
 
+	static public ActionButton updateButton = new ActionButton("Update", false,
+			(selectedCount, isTop, isBottom) -> true, tableActions -> tableActions.changeProperty("update", "true"));
+
 	static public ActionButton openDetailsButton = new ActionButton("Details", false,
 			(selectedCount, isTop, isBottom) -> selectedCount == 1,
 			tableActions -> tableActions.changeProperty("showdetails", "true"));
@@ -36,13 +40,18 @@ public class ActionButtonFactory {
 			(selectedCount, isTop, isBottom) -> selectedCount == 1,
 			tableActions -> tableActions.changeProperty("generate", "true"));
 
-	static public void createButtons(List<ActionButton> buttonActions, TableActions tableActions) {
+	static public List<JButton> createButtons(List<ActionButton> buttonActions, TableActions tableActions) {
+		List<JButton> buttonList = new ArrayList<>();
+
 		buttonActions.forEach(buttonAction -> {
 			JButton button = new JButton(buttonAction.getName());
 
+			button.setEnabled(buttonAction.initialEnabled());
 			button.addActionListener(evt -> buttonAction.executeAction(tableActions));
-			buttonAction.setButton(button);
-			tableActions.addListener(new TableListener(buttonActions));
+			buttonList.add(button);
 		});
+
+		tableActions.addListener(new TableListener(buttonActions, buttonList));
+		return buttonList;
 	}
 }

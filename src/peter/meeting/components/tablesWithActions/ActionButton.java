@@ -1,7 +1,5 @@
 package peter.meeting.components.tablesWithActions;
 
-import javax.swing.JButton;
-
 import peter.meeting.components.tables.TableActions;
 
 public class ActionButton {
@@ -9,7 +7,6 @@ public class ActionButton {
 	private boolean initialEnabled;
 	private IsButtonEnabled isButtonEnabled;
 	private ButtonExecution executeAction;
-	private JButton button;
 
 	public ActionButton(String name, boolean initialEnabled, IsButtonEnabled isButtonEnabled,
 			ButtonExecution executeAction) {
@@ -18,7 +15,7 @@ public class ActionButton {
 		this.isButtonEnabled = isButtonEnabled;
 		this.executeAction = executeAction;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -33,13 +30,5 @@ public class ActionButton {
 
 	public void executeAction(TableActions actions) {
 		executeAction.execute(actions);
-	}
-	
-	public JButton getButton() {
-	  return button;	
-	}
-	
-	public void setButton( JButton button) {
-		this.button = button;
-	}
+	}	
 }

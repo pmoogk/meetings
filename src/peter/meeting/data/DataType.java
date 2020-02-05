@@ -1,5 +1,5 @@
 package peter.meeting.data;
 
 public enum DataType {
-	Role, Person, Section
+	Role, RegularRole, GuestRole, Person, Section, Meeting, OpenMeeting, CompletedMeeting
 }

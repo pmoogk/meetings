@@ -1,6 +1,6 @@
 package peter.meeting.components.tabs;
 
-import peter.meeting.components.BaseTablePanel;
+import peter.meeting.common.panels.BaseTablePanel;
 import peter.meeting.components.tables.RoleListTable;
 import peter.meeting.data.Role;
 
@@ -9,5 +9,6 @@ public class RolesTab extends BaseTablePanel<Role> {
 
 	public RolesTab() {
 		super(new RoleListTable());
+		create();
 	}
 }

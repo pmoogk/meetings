@@ -20,12 +20,17 @@ public class DataFactoryImpl implements DataFactory {
 	@Override
 	public <T extends Identifiable> T getIdentifiableById(DataType dataType, String id) {
 		Identifiable result = null;
-		List<Identifiable> list = root.getList(dataType);
 
-		if (id != null) {
-			Optional<Identifiable> found = list.stream().filter(identifier -> identifier.getId().equals(id))
-					.findFirst();
-			result = found.isPresent() ? found.get() : null;
+		if (dataType == DataType.OpenMeeting || dataType == DataType.CompletedMeeting) {
+			result = root.getMap(dataType).get(id);
+		} else {
+			List<Identifiable> list = root.getList(dataType);
+
+			if (id != null) {
+				Optional<Identifiable> found = list.stream().filter(identifier -> identifier.getId().equals(id))
+						.findFirst();
+				result = found.isPresent() ? found.get() : null;
+			}
 		}
 
 		return (T) result;
@@ -38,13 +43,17 @@ public class DataFactoryImpl implements DataFactory {
 
 		switch (dataType) {
 		case Role:
-			result = new RoleImpl(root.createID(), (String) parameters[0], (Boolean) parameters[1]);
+			result = new RoleImpl(root.createID(), (String) parameters[0], (Boolean) parameters[1],
+					(Boolean) parameters[2], (Boolean) parameters[3], (Boolean) parameters[4]);
 			break;
 		case Person:
 			result = new PersonImpl(root.createID(), (String) parameters[0], (Role) parameters[1]);
 			break;
 		case Section:
 			result = new SectionImpl(root.createID(), (String) parameters[0]);
+			break;
+		case Meeting:
+			result = new MeetingImpl(root.createID());
 			break;
 		default:
 			break;

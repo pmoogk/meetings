@@ -15,9 +15,9 @@ import javax.swing.event.ChangeListener;
 
 import peter.meeting.common.Pair;
 import peter.meeting.components.ButtonTabComponent;
-import peter.meeting.components.UpdateableComponent;
 import peter.meeting.components.tabs.TabFactory;
 import peter.meeting.components.tabs.TabType;
+import peter.meeting.components.tabs.UpdateableTabComponent;
 import peter.meeting.data.StateData;
 
 public class MainUI extends JFrame {
@@ -30,7 +30,7 @@ public class MainUI extends JFrame {
 		addMenus();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Meeting minutes application");
-		setSize(1000, 600);
+		setSize(1000, 800);
 		setLocationRelativeTo(null);
 		setVisible(true);
 
@@ -46,7 +46,7 @@ public class MainUI extends JFrame {
 	private void save() {
 		if (rootTabPane != null) {
 			// Need to close the editor in the last tabbed pane,
-			UpdateableComponent component = (UpdateableComponent) rootTabPane.getSelectedComponent();
+			UpdateableTabComponent component = (UpdateableTabComponent) rootTabPane.getSelectedComponent();
 
 			if (component != null) {
 				component.stopEditing();
@@ -68,6 +68,7 @@ public class MainUI extends JFrame {
 		JMenuItem rolesItem = new JMenuItem("Roles");
 		JMenuItem peopleItem = new JMenuItem("People");
 		JMenuItem sectionItem = new JMenuItem("Section");
+		JMenuItem meetingDetailsItem = new JMenuItem("MeetingDetails");
 
 		showMeetingsItem.addActionListener(e -> {
 			addTab(TabType.Meetings);
@@ -85,6 +86,10 @@ public class MainUI extends JFrame {
 			addTab(TabType.Sections);
 		});
 
+		meetingDetailsItem.addActionListener(e -> {
+			addTab(TabType.MeetingDetails);
+		});
+
 		saveMenuItem.addActionListener(e -> {
 			save();
 		});
@@ -97,9 +102,11 @@ public class MainUI extends JFrame {
 		menu.add(openMenuItem);
 		menu.add(saveMenuItem);
 		menuBar.add(menu);
+		listsMenu.add(showMeetingsItem);
 		listsMenu.add(rolesItem);
 		listsMenu.add(peopleItem);
 		listsMenu.add(sectionItem);
+		listsMenu.add(meetingDetailsItem);
 		menuBar.add(listsMenu);
 		this.setJMenuBar(menuBar);
 	}
@@ -121,7 +128,7 @@ public class MainUI extends JFrame {
 			rootTabPane.setTabComponentAt(tabCount, new ButtonTabComponent(rootTabPane, tabType));
 			rootTabPane.setSelectedIndex(tabCount);
 		} else {
-			UpdateableComponent component = (UpdateableComponent) rootTabPane.getComponentAt(tabIndex);
+			UpdateableTabComponent component = (UpdateableTabComponent) rootTabPane.getComponentAt(tabIndex);
 
 			component.refresh();
 			rootTabPane.setSelectedIndex(tabIndex);
@@ -140,7 +147,7 @@ public class MainUI extends JFrame {
 				}
 
 				if (old != null && oldIdx < tabPane.getTabCount()) {
-					((UpdateableComponent) tabPane.getComponentAt(oldIdx)).stopEditing();
+					((UpdateableTabComponent) tabPane.getComponentAt(oldIdx)).stopEditing();
 				}
 
 				if (currIndex != -1) {
